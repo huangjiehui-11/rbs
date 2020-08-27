@@ -1,0 +1,77 @@
+<script>
+    async function DeleteBooking(user_Id, res_Id) {
+        var r = confirm("Confirm Delete this booking?");
+        if (r) {
+            var response = await fetch("/rbs/book_delete/" + user_Id + "/" + res_Id, {
+                method: "DELETE",
+                credentials: 'same-origin',
+            });
+
+            var message = await response.text();
+            alert(message);
+            location.reload();
+        }
+    };
+</script>
+
+<div>
+
+    <div class="row">
+        <div class="col-12 col-md-4" style="padding-top: 0px; margin-bottom: 20px;">
+            <a href="/rbs/detail/<%= model.id %>" style="font-size:20px; font-weight: bold;">
+                <%= model.name %>
+            </a>
+            <br><br>
+            <ul class="list-group" id="ul_list">
+                <li class="list-group-item">
+                    <img src="<%= model.imageURL %>" class="card-img" alt="...">
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 col-md-4" style="padding-top: 0px; margin-bottom: 20px;">
+            <p style="font-size:20px; font-weight: bold;">Restaurant Information</p>
+            <ul class="list-group" id="ul_list">
+                <li class="list-group-item">Location:
+                    <%= model.location %>
+                </li>
+                <li class="list-group-item">Cuisine:
+                    <%= model.cuisine %>
+                </li>
+                <li class="list-group-item">Price Range: $
+                    <%= model.min %> -
+                        <%= model.min %>
+                </li>
+                <li class="list-group-item">Rating:
+                    <%= model.rating %>
+                </li>
+                <li class="list-group-item">MaxBooking:
+                    <%= model.maxbooking %>
+                </li>
+                <li class="list-group-item">Created:
+                    <%= new Date(model.createdAt).toLocaleString() %>
+                </li>
+                <li class="list-group-item">Updated:
+                    <%= new Date(model.updatedAt).toLocaleString() %>
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 col-md-4" style="padding-top: 0px; margin-bottom: 20px;">
+            <p style="font-size:20px; font-weight: bold;">Estate Occupant</p>
+            <table class="table">
+                <tbody>
+                    <% model.worksFor.forEach( function(user) { %>
+                        <tr>
+                            <th scope="row">User:
+                                <%= user.id %>
+                            </th>
+                            <td>
+                                <%= user.username %>
+                            </td>
+                            <td><button class="btn btn-danger" onclick="DeleteBooking('<%= user.id %>', '<%= model.id %>')">Delete</td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

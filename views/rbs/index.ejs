@@ -1,0 +1,36 @@
+<!-- <p>this is a home page</p> -->
+
+<div class="row">
+    <% rbs.forEach( function(model) {  %>
+        <div class="card col-12 col-md-6 homeMain">
+            <a href="/rbs/detail/<%= model.id %>" style="font-size:20px; font-weight: bold;">
+                <%= model.name %>
+            </a>
+            <div class="row">
+                <div class="col-md-3" style="display: flex; justify-content: center; align-items: center;">
+                    <img src="<%= model.imageURL %>" class="card-img" alt="...">
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">Location:
+                                <%= model.location %>
+                            </li>
+                            <li class="list-group-item">Cuisine:
+                                <%= model.cuisine %>
+                            </li>
+                            <li class="list-group-item">Price Range: $
+                                <%= model.min %> -
+                                    <%= model.max %>
+                            </li>
+                            <li class="list-group-item">Rating:
+                                <%= model.rating %>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+
+</div>

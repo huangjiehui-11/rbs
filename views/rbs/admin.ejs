@@ -1,0 +1,39 @@
+<!-- <p>this is a admin page</p> -->
+<script>
+    async function deleteItem(id) {
+        var r = confirm("Confirm Delete?");
+        if (r) {
+            var response = await fetch("/rbs/delete/" + id, {
+                method: "POST",
+                credentials: 'same-origin',
+            });
+
+            var message = await response.text();
+            alert(message);
+            location.reload(true);
+        }
+    }
+</script>
+
+<table class="table">
+    <tbody>
+        <% models.forEach( function(model) {  %>
+            <tr>
+                <th scope="row">
+                    <%= model.id %>
+                </th>
+                <td>
+                    <a href="/rbs/detail/<%= model.id %>">
+                        <%= model.name %>
+                    </a>
+                </td>
+                <td>
+                    <%= model.location %>
+                </td>
+                <td><a href="/rbs/bookings?resId=<%= model.id %>">Bookings</a></td>
+                <td><a href="/rbs/update/<%= model.id %>">Edit</a></td>
+                <td><button class="btn btn-danger" onclick="deleteItem('<%= model.id %>')">Delete</td>
+            </tr>
+            <% }) %>
+    </tbody>
+</table>

@@ -1,0 +1,83 @@
+<!-- <p>this is a create page</p> -->
+
+
+<p style="font-size:30px; font-weight: bold;">Restaurant Create form</p>
+
+
+<form class="row" method="POST" action="/rbs/create" id="myform">
+    <div class="col-12 col-md-6">
+
+        <div class="form-group">
+            <label style="display: block; font-size:20px;">Restaurant Name:</label>
+            <input class="form-control" name="name" type="text" required>
+        </div>
+        <div class="form-group">
+            <label style="display: block; font-size:20px;">Discription:</label>
+            <input class="form-control" style="height: 80px;" name="discription" type="text" required>
+        </div>
+        <div class="form-group">
+            <label style="display: block; font-size:20px;">Location:</label>
+            <select name="location" class="form-control" required>
+                    <option value="Tsim Sha Tsui">Tsim Sha Tsui</option>
+                    <option value="Mong Kok">Mong Kok</option>
+                    <option value="Central">Central</option>
+                    <option value="Central">Central</option>
+                    <option value="Admiralt">Admiralt</option>
+                    <option value="Tseung Kwan O">Tseung Kwan O</option>
+                    <option value="Tai Koo">Tai Koo</option>
+                    <option value="Wan Chai">Wan Chai</option>
+                    <option value="Causeway Bay">Causeway Bay</option>
+                    <option value="Sha Tin">Sha Tin</option>
+                    <option value="Sai Ying Pun">Sai Ying Pun</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label style="display: block; font-size:20px;">Cuisine:</label>
+            <input class="form-control" name="cuisine" type="text" required>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+
+        <div class="form-group">
+            <label style="display: block; font-size:20px;">imageURL:</label>
+            <input class="form-control" name="imageURL" type="text">
+        </div>
+        <div class="form-group">
+            <label style="display: block; font-size:20px;">Rating:</label>
+            <input class="form-control" name="rating" type="string" required>
+        </div>
+
+        <label style="display: block; font-size:20px; ">Price Range(HK$):</label>
+        <div class="form-group" style="display: flex;justify-content: space-between;">
+
+            <div style="display: block;   font-size:20px;">Min:</div>
+            <div style="width: 150px;"><input class="form-control" name="min" type="number" required>
+            </div>
+
+            <div style="display: block;  font-size:20px;  width: 60px;">Max:</div>
+            <div style="width: 150px;"><input class="form-control" name="max" type="number" required>
+            </div>
+
+
+        </div>
+        <div class="form-group">
+            <label style="display: block; font-size:20px;">MaxBooking:</label>
+            <input class="form-control" name="maxbooking" type="number" required>
+        </div>
+        <div class="form-group">
+            <input type="checkbox" value="dummy" name="highlighted"><span> Highlighted Restaurant</span>
+        </div>
+    </div>
+
+
+</form>
+<div style="text-align: center;">
+    <button type="submit" class="btn btn-primary" style="text-align: center;width: 600px;" onclick="formSubmit()">Submit</button>
+</div>
+
+<script>
+    function formSubmit() {
+        document.getElementById("myform").submit()
+    }
+</script>

@@ -1,0 +1,84 @@
+<div>
+    <form action="/rbs/update/<%= rbs.id %>" method="POST" class="row" id="myform">
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label>Restaurant Name:</label>
+                <input type="text" class="form-control" name="Rbs[name]" value="<%= rbs.name %>" required>
+            </div>
+            <div class="form-group">
+                <label>Description:</label>
+                <textarea cols=50 rows=12 type="text" style="height: 80px;" class="form-control" name="Rbs[discription]" required>value="<%= rbs.discription %>"</textarea>
+            </div>
+            <div class="form-group">
+                <label style="display: block; font-size:20px;">Location:</label>
+                <select name="Rbs[location]" value="<%= rbs.location %>" style="width:100%;height: 100%;">
+                <option value="Tsim Sha Tsui">Tsim Sha Tsui</option>
+                    <option style="font-size:20px;" value="Mong Kok">Mong Kok</option>
+                    <option style="font-size:20px;" value="Central">Central</option>
+                    <option style="font-size:20px;" value="Central">Central</option>
+                    <option style="font-size:20px;" value="Admiralt">Admiralt</option>
+                    <option style="font-size:20px;" value="Tseung Kwan O">Tseung Kwan O</option>
+                    <option style="font-size:20px;" value="Tai Koo">Tai Koo</option>
+                    <option style="font-size:20px;" value="Wan Chai">Wan Chai</option>
+                    <option style="font-size:20px;" value="Causeway Bay">Causeway Bay</option>
+                    <option style="font-size:20px;" value="Sha Tin">Sha Tin</option>
+                    <option style="font-size:20px;" value="Sai Ying Pun">Sai Ying Pun</option>
+            </select>
+            </div>
+
+            <div class="form-group">
+                <label>Cuisine</label>
+                <input type="text" class="form-control" name="Rbs[cuisine]" value="<%= rbs.cuisine %>" required>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label>ImageUrl</label>
+                <input type="text" class="form-control" name="Rbs[imageURL]" value="<%= rbs.imageURL %>" required>
+            </div>
+            <div class="form-group">
+                <label>Rating:</label>
+                <input type="string" class="form-control" name="Rbs[rating]" value="<%= rbs.rating %>" required>
+            </div>
+            <div class="form-group">
+                <label>Min:</label>
+                <input type="number" class="form-control" name="Rbs[min]" value="<%= rbs.min %>" required>
+                <label>Max:</label>
+                <input type="number" class="form-control" name="Rbs[max]" value="<%= rbs.max %>" required>
+            </div>
+            <div class="form-group">
+                <label style="display: block; font-size:20px;">MaxBooking:</label>
+                <input class="form-control" name="Rbs[maxbooking]" type="number" value="<%= rbs.maxbooking %>" required>
+                <div class="form-group">
+                    <label>Highlighted Restaurant</label>
+                    <input id="checkbox" type="checkbox" name="Rbs[highlighted]" value="dummy">
+                </div>
+
+            </div>
+
+
+    </form>
+    </div>
+    <div style="text-align: center;">
+        <button type="submit" class="btn btn-primary" style="text-align: center;width: 600px;" onclick="formSubmit()">Submit</button>
+    </div>
+
+    <br>
+    <form action="/rbs/delete/<%= rbs.id %>" method="POST" style="text-align: center;">
+        <button class="btn btn-danger" style="width: 350px;">Delete</button>
+    </form>
+
+    <script>
+        window.onload = function() {
+            var checkbox = document.getElementById("checkbox").value;
+            if (checkbox == "on") {
+                $('#checkbox').prop('checked', true);
+            } else {
+                $('#checkbox').prop('checked', false);
+            }
+        };
+
+        function formSubmit() {
+            document.getElementById("myform").submit()
+        }
+    </script>

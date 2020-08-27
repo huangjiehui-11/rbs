@@ -1,0 +1,142 @@
+<script>
+    async function getState(user_Id, res_Id) {
+
+        if (user_Id) {
+            var response = await fetch("/rbs/bookStatus?userId=" + user_Id + "&resId=" + res_Id, {
+                method: "GET",
+                credentials: 'same-origin',
+            });
+
+            var message = await response.text();
+            // console.log(message == "Rented");
+            if ("Booked" == message) {
+                ul_list = document.getElementById("ul_list");
+
+                btn = document.createElement("button");
+                btn.innerText = "Move Out";
+                btn.className = "btn btn-primary";
+                btn.onclick = async function Move_Out() {
+                    const data = {
+                        userId: user_Id,
+                        resId: res_Id
+                    }
+                    var r = confirm("Confirm Move Out?");
+                    if (r) {
+                        var response = await fetch("/rbs/book_delete", {
+                            method: "POST",
+                            'Content-Type': 'application/json',
+                            credentials: 'same-origin',
+                            body: JSON.stringify(data),
+                        });
+
+                        var message = await response.text();
+                        alert(message);
+                        location.reload();
+                    }
+                };
+                ul_list.append(btn);
+
+            } else {
+                ul_list = document.getElementById("ul_list");
+                btn = document.createElement("button");
+                btn.className = "btn btn-primary";
+                btn.innerText = "Booking";
+                btn.onclick = async function book() {
+                    const data = {
+                        userId: user_Id,
+                        resId: res_Id
+                    }
+                    var r = confirm("Confirm Booking?");
+                    if (r) {
+                        var response = await fetch("/rbs/book_add", {
+                            method: "POST",
+                            'Content-Type': 'application/json',
+                            credentials: 'same-origin',
+                            body: JSON.stringify(data),
+                        });
+
+                        var message = await response.text();
+                        alert(message);
+                        location.reload();
+                    }
+                };
+                ul_list.append(btn);
+
+            }
+        } else {
+            // alert("Service Error, Please contact adminster")
+
+            ul_list = document.getElementById("ul_list");
+
+            btn = document.createElement("button");
+            btn.innerText = "Login";
+            btn.className = "btn btn-primary";
+            btn.onclick = async function Login() {
+                window.location = "/user/login";
+            };
+            ul_list.append(btn);
+        }
+    }
+</script>
+
+
+<div class="container" style="border:1px solid lightgrey;width: 2000px;height: 510px;">
+    <h1 style="padding:0.3cm;">
+        <%= rbs.name %>
+    </h1>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <img src="<%= rbs.imageURL%>" style="float: left;width:550px;height: 350px;">
+            <div style="float: left;width: auto;">
+                <span style="font-weight: bold; float: left;">Description:</span>
+
+                <%= rbs.discription %>
+
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="list" style=" width: 500px;float: left;height: 510px;">
+                <% var create = new Date(rbs.createdAt).toLocaleDateString() %>
+                    <% var update = new Date(rbs.updatedAt).toLocaleDateString() %>
+                        <ul class="list-group" id="ul_list">
+                            <li class="list-group-item" style="line-height: 30px;">
+                                <span style="font-weight: bold;">Location:</span>
+                                <%= rbs.location %>
+                            </li>
+                            <li class="list-group-item" style="line-height: 30px;">
+                                <span style="font-weight: bold;">Cuisine:</span>
+                                <span><%= rbs.cuisine %> </span>
+                            </li>
+                            <li class="list-group-item" style="line-height: 30px;">
+                                <span style="font-weight: bold;">Price Range:</span>
+                                <span>$<%= rbs.min %> - <%= rbs.max %></span>
+                            </li>
+                            <li class="list-group-item" style="line-height: 30px;">
+                                <span style="font-weight: bold;">Rating:</span>
+                                <%= rbs.rating %>
+                            </li>
+                            <li class="list-group-item" style="line-height: 30px;">
+                                <span style="font-weight: bold;">Maxbooking:</span>
+                                <%= rbs.maxbooking %>
+                            </li>
+                            <li class="list-group-item" style="line-height: 30px;">
+                                <span style="font-weight: bold;">Created:</span>
+                                <%= create %>
+                            </li>
+                            <li class="list-group-item" style="line-height: 30px;">
+                                <span style="font-weight: bold;">Updated:</span>
+                                <%= update %>
+                            </li>
+                        </ul>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <script>
+        getState('<%= req.session.userid %>', '<%= rbs.id %>');
+    </script>

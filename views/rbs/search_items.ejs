@@ -1,0 +1,121 @@
+<!-- <p>this is a search page</p> -->
+
+<div class="row">
+
+    <% models.forEach( function(model) { %>
+        <div class="card col-12 col-md-4">
+            <div style="display: flex; justify-content: center; align-items: center; height: 50%;">
+                <img style="height: 100%; width: 100%" src="<%= model.imageURL %>" class="card-img" alt="...">
+            </div>
+            <div style="margin-left: 5px">
+                <br>
+                <a href="/rbs/detail/<%= model.id %>" style="font-size:20px; font-weight: bold;">
+                    <%= model.name %>
+                </a>
+                <div style="margin-top: 10px; margin-left: 10px;">
+                    <ul class="list-group">
+                        <li class="list-group-item">Location:
+                            <%= model.location %>
+                        </li>
+                        <li class="list-group-item">Cuisine:
+                            <%= model.cuisine %>
+                        </li>
+                        <li class="list-group-item">Price Range: $
+                            <%= model.min %> -
+                                <%= model.max %>
+                        </li>
+                        <li class="list-group-item">Rating:
+                            <%= model.rating %>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+
+            <div class="col-12 col-md-4">
+                <div>
+                    <% const current = parseInt(req.query.page) || 1; %>
+
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <button onclick="formSubmit('<%= Math.max(current-1, 1) %>')">Previous</button>
+                                </li>
+
+                                <% for (i = 1; i <= count; i++) { %>
+                                    <li class="page-item">
+                                        <button onclick="formSubmit('<%= i %>')">
+                                            <%= i %>
+                                        </button>
+                                    </li>
+                                    <% } %>
+
+                                        <li class="page-item">
+                                            <button onclick="formSubmit('<%= Math.min(current+1, count) %>')">Next</button>
+                                        </li>
+                            </ul>
+                        </nav>
+                </div>
+
+                <p style="font-size:30px; font-weight: bold;">Restaurant Search</p>
+                <form class="form-group" action="/rbs/search_items" method="POST" id="myForm">
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Restaurant Name: </label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text" name="searchBody[name]" value="<%= rbs.name%>">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Location: </label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="searchBody[location]" value="<%= rbs.location %>">
+                        <option selected=" selected " value=" ">Select location here</option>
+                        <option value="Tsim Sha Tsui">Tsim Sha Tsui</option>
+                        <option value="Mong Kok">Mong Kok</option>
+                        <option value="Central">Central</option>
+                        <option value="Admiralt">Admiralt</option>
+                        <option value="Tseung Kwan O">Tseung Kwan O</option>
+                        <option value="Tai Koo">Tai Koo</option>
+                        <option value="Wan Chai">Wan Chai</option>
+                        <option value="Causeway Bay">Causeway Bay</option>
+                        <option value="Sha Tin">Sha Tin</option>
+                        <option value="Sai Ying Pun">Sai Ying Pun</option>
+                    </select>
+                        </div>
+                    </div>
+                    <div class="form-group row ">
+                        <label class="col-sm-3 col-form-label ">Cuisine: </label>
+                        <div class="col-sm-9 ">
+                            <input class="form-control " type="text " name="searchBody[cuisine] " value="<%=rbs.cuisine%>">
+                        </div>
+                    </div>
+
+                    <label style="display: block; font-size:15px;">Price Range(HK$):</label>
+                    <div class="form-group row">
+                        <label class="col-sm-3">Min: </label>
+                        <input class="form-control col-sm-3" type="number" name="searchBody[price_min]" style="width: 100px;" value="<%= rbs.price_min %>">
+                        <label class=" col-sm-3 "> Max: </label>
+                        <input class="form-control col-sm-3 " type="number " name="searchBody[price_max] " style="width: 100px " value="<%=rbs.price_max %>">
+                    </div>
+
+                    <label style="display: block; font-size:15px;">Rating:</label>
+                    <div class="form-group row">
+                        <label class="col-sm-3">Min: </label>
+                        <input class="form-control col-sm-3" type="number" name="searchBody[rating_min]" style="width: 100px;" value="<%= rbs.rating_min %>">
+                        <label class=" col-sm-3 ">Max: </label>
+                        <input class="form-control col-sm-3 " type="number " name="searchBody[rating_max] " style="width: 100px; " value="<%=rbs.rating_max %>">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+</div>
+
+<script type="text/javascript">
+    function formSubmit(page) {
+        document.getElementById("myForm").action = "/rbs/search_items/?page=" + page;
+        document.getElementById("myForm").submit()
+    }
+</script>
